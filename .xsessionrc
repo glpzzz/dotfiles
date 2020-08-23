@@ -1,0 +1,6 @@
+slstatus &
+# hsetroot -solid '#000000'
+hsetroot -cover ~/.wallpaper.jpg
+
+export SCRIPTS_HOME=$HOME/.local/bin
+export PATH=$PATH:$SCRIPTS_HOME
