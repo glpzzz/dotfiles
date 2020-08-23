@@ -1,0 +1,51 @@
+#! /bin/bash
+
+# config monitors
+
+monitors=$(xrandr | grep " connected" | wc -l)
+if [ $monitors -eq 1 ]; then
+	bspc monitor -d I II III IV V VI VII VIII IX X
+elif [ $monitors -eq 2 ]; then
+	xrandr --output LVDS-1 --primary --auto --output HDMI-1 --left-of LVDS-1
+	bspc monitor LVDS-1 -d I II III IV V
+	bspc monitor HDMI-1 -d VI VII VIII XI X
+fi
+
+bspc config border_width	        1
+bspc config window_gap		        5
+
+bspc config split_ratio		        0.51
+bspc config borderless_monocle      true
+bspc config gapless_monocle         true
+bspc config single_monocle          true
+
+bspc config initial_polarity        first_child
+bspc config automatic_scheme        spiral
+
+bspc focus_follows_pointer          true
+bspc pointer_follows_monitor		true
+
+# kill running autostart apps
+
+pkill sxhkd
+pkill compton
+pkill conky
+pkill kdeconnect-indicator
+pkill nm-tray
+pkill xautolock
+pkill pcmanfm-qt
+
+# start autostart apps
+
+sxhkd -c ~/.config/sxhkd/sxhkdrc &
+sxhkd -c ~/.config/sxhkd/launchers &
+
+# compton -b &
+# conky -c .config/conky/conky.cfg &
+# kdeconnect-indicator &
+# pcmanfm-qt -d &
+docker ps
+
+hsetroot -cover .wallpaper.jpg
+xautolock -time 4 -locker slock
+xsetroot -cursor_name left_ptr &
