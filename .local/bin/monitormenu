@@ -1,0 +1,32 @@
+#!/bin/bash
+
+choices="Laptop\nExternal\nMain Left\nMain Right\nARandR"
+
+action=$(echo -e "$choices" | dmenu -p "Display modes: ")
+case "$action" in
+    'Laptop')
+        xrandr --output LVDS-1 --mode 1366x768
+        xrandr --output HDMI-1 --off
+    ;;
+    'External')
+        xrandr --output LVDS-1 --off
+        xrandr --output HDMI-1 --mode 1360x768
+    ;;
+    'Main Left')
+        xrandr --output LVDS-1 --mode 1366x768 --left-of HDMI-1 --primary
+        xrandr --output HDMI-1 --mode 1360x768
+    ;;
+    'Main Right')
+        xrandr --output LVDS-1 --mode 1366x768 --right-of HDMI-1 --primary
+        xrandr --output HDMI-1 --mode 1360x768
+    ;;
+    'ARandR')
+        arandr & disown
+    ;;
+    # *'On'*)
+    #     xset dpms force on
+    # ;;
+    # *'Off'*)
+    #     xset dpms force off
+    # ;;
+esac

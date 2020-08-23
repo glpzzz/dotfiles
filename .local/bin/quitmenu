@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# QUITMENU
+# Simon H Moore
+# 
+# Gives a list of options to:
+# hibernate, sleep, exit (logout), shutdown or reboot.
+
+# List of choices to pass to dmenu
+choices="exit\nlock\nreboot\nshutdown\nsleep"
+
+# get choice form dmenu
+choice=$(echo -e "$choices" | dmenu -p "Quit Menu: ")
+
+case "$choice" in 
+    exit) loginctl terminate-session $(loginctl session-status|awk "NR==1{print $1}");;
+    lock) slock;;
+    reboot) systemctl reboot;;
+    shutdown) systemctl poweroff;;
+    sleep) systemctl suspend;;
+esac

@@ -1,0 +1,12 @@
+#!/bin/bash
+# dmenu_man - dmenu selection of manual pages
+
+# get list of manuals
+list=$(man -k .)
+
+# call dmenu to select manual
+manual=$(dmenu -l 30 -i  <<< "$list" | awk '{print $1}')
+
+# render manual in browser
+x-terminal-emulator -e man  "$manual"
+

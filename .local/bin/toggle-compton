@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Check if compton is running
+# -x flag only match processes whose name (or command line if -f is
+# specified) exactly match the pattern. 
+
+if pgrep -x "compton" > /dev/null
+then
+    notify-send Compton OFF
+    killall compton
+else
+    notify-send Compton ON
+    compton &
+fi
